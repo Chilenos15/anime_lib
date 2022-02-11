@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_09_022658) do
+ActiveRecord::Schema.define(version: 2022_02_11_004053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "animes", force: :cascade do |t|
+    t.string "title"
+    t.string "rating"
+    t.string "image"
+    t.bigint "platform_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["platform_id"], name: "index_animes_on_platform_id"
+  end
 
   create_table "platforms", force: :cascade do |t|
     t.string "name"
@@ -57,5 +67,6 @@ ActiveRecord::Schema.define(version: 2022_02_09_022658) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "animes", "platforms"
   add_foreign_key "platforms", "users"
 end
